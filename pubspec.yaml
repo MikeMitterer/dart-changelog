@@ -1,5 +1,5 @@
 name: git-init
-version: 0.0.1
+version: 0.1.0
 description: Make git init and adds the GH Repo as origin
 #author: <your name> <email@example.com>
 #homepage: https://www.example.com

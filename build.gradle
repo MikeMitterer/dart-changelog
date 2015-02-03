@@ -20,7 +20,11 @@ ext.gitExtendedVersionX = {
         commandLine 'git', 'describe', '--tags'
         standardOutput = stdout
     }
-    return stdout.toString().trim().replaceFirst("v","").replaceFirst('-(?!.*-).*','').replaceFirst("-",".");
+    def version = stdout.toString().trim().replaceFirst("v","").replaceFirst('-(?!.*-).*','').replaceFirst("-",".");
+    if(version.indexOf(".") == version.lastIndexOf(".")) {
+        version = version + ".0"
+    }
+    return version;
 }
 
 def readTags() {
