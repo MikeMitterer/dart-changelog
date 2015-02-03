@@ -109,14 +109,14 @@ class Application {
     }
 
     void _showUsage() {
-        print("Usage: gitinit [options]");
+        print("Usage: git-init [options]");
         _parser.getUsage().split("\n").forEach((final String line) {
             print("    $line");
         });
 
         print("");
         print("Sample:");
-        print("    gitinit -i dart-wsk-angular.git");
+        print("    git-init -i dart-wsk-angular.git");
         print("");
     }
 
