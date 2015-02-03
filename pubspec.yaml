@@ -1,0 +1,29 @@
+name: git-init
+version: 0.0.1
+description: Make git init and adds the GH Repo as origin
+#author: <your name> <email@example.com>
+#homepage: https://www.example.com
+environment:
+  sdk: '>=1.0.0 <2.0.0'
+
+# Add the bin/git-init.dart script to the scripts pub installs.
+# Activate local repo:
+#   pub global activate --source path .
+#
+executables:
+  git-init:
+
+dependencies:
+  logging: any
+  logging_handlers: any
+
+  intl: any
+  args: any
+  validate: any
+  browser_detect: any
+
+  console_log_handler: #any
+    path: /Volumes/Daten/DevLocal/DevDart/ConsoleLogHandler
+
+dev_dependencies:
+  unittest: any
