@@ -1,7 +1,11 @@
 part of githelp;
 
+/// Repo baut schlussendlich immer etwas
+/// in dieser Art zusammen:
+///     http://$baseUrl/$account/$repository/commit/%H
+///     http://github.com/MikeMitterer/dart-wsk-material/commit/f98429bc61b9c87261b56283bb8034debdaca919
 abstract class Repo {
-    String get name;
+    String get repository;
 
     String get account;
 
@@ -29,7 +33,7 @@ abstract class Repo {
 class _DummyRepo implements Repo {
     final Logger _logger = new Logger("githelp._DummyRepo");
 
-    String get name => "";
+    String get repository => "";
 
     String get account => "";
 
@@ -68,7 +72,7 @@ class RepoGitHub implements Repo {
     }
 
 
-    String get name {
+    String get repository {
         final String repository = _originUrl.replaceFirst(new RegExp(r"[^/]*/"), "").trim();
         _logger.finer("Repository: $repository");
         return repository;

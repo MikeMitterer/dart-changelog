@@ -96,7 +96,7 @@ class Application {
         }
 
         void iterateThroughSection(final String tag, final String tagRange,final _LogSections sections,{ final bool isUnreleased: false }) {
-            _logger.fine("$tag, ${isUnreleased ? '' : _getTagDate(tag) } ($tagRange)");
+            _logger.fine("\n$tag, ${isUnreleased ? '' : _getTagDate(tag) } ($tagRange)");
             //_logger.fine(_getTagHeadline(tag,tagRange));
 
             buffer.writeln();
@@ -142,7 +142,7 @@ class Application {
 
         if(!isSimulation) {
             file.writeAsString(buffer.toString());
-            _logger.info("${file.path} created...");
+            _logger.info("\n${file.path} created...");
         }
     }
 
@@ -162,11 +162,11 @@ class Application {
         String changelogformat;
         if(repo.isValid) {
             final String ghaccount = repo.account;
-            final String ghproject = repo.name.replaceFirst(r".git","");
+            final String repository = repo.repository.replaceFirst(r".git","");
             final String baseurl = repo.baseUrl;
 
             // pretty-format: http://opensource.apple.com/source/Git/Git-19/src/git-htmldocs/pretty-formats.txt
-            changelogformat = "%s [%h](http://$baseurl/$ghaccount/$ghproject/commit/%H)";
+            changelogformat = "%s [%h](http://$baseurl/$ghaccount/$repository/commit/%H)";
         } else {
             changelogformat = "%s [%h]";
         }
@@ -206,7 +206,7 @@ class Application {
             _logger.severe("Get Date for Tag $tag faild with ${result.stderr}!");
         }
         final String date = result.stdout.replaceFirst(new RegExp(r" .*"),"").trim();
-        _logger.fine("Date: $date");
+        //_logger.fine("Date: $date");
         return date;
     }
 
@@ -218,10 +218,10 @@ class Application {
         String headline;
         if(repo.isValid) {
             final String ghaccount = repo.account;
-            final String ghproject = repo.name.replaceFirst(r".git","");
+            final String repository = repo.repository.replaceFirst(r".git","");
             final String baseurl = repo.baseUrl;
 
-            headline = "[$tag](http://$baseurl/$ghaccount/$ghproject/compare/$range)";
+            headline = "[$tag](http://$baseurl/$ghaccount/$repository/compare/$range)";
 
         } else {
             headline = "$tag";
