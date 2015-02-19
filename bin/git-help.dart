@@ -1,6 +1,4 @@
-#!/usr/bin/env dart
-
-import 'package:git-init/gitinit.dart';
+import 'package:git-help/githelp.dart';
 
 void main(List<String> arguments) {
     final Application application = new Application();

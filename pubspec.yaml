@@ -1,6 +1,6 @@
-name: git-init
+name: git-help
 version: 0.1.0
-description: Make git init and adds the GH Repo as origin
+description: Helps to write a CHANGELOG.md and with some other git related stuff
 #author: <your name> <email@example.com>
 #homepage: https://www.example.com
 environment:
@@ -11,7 +11,7 @@ environment:
 #   pub global activate --source path .
 #
 executables:
-  git-init:
+  git-help:
 
 dependencies:
   logging: any

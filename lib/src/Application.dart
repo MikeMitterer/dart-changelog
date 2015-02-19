@@ -1,51 +1,49 @@
-part of gitinit;
+part of githelp;
 
 class Application {
-    final Logger _logger = new Logger("gitinit.Application");
+    final Logger _logger = new Logger("githelp.Application");
 
-    static const _ARG_HELP              = 'help';
-    static const _ARG_LOGLEVEL          = 'loglevel';
-    static const _ARG_SETTINGS          = 'settings';
-    static const _ARG_INIT              = 'init';
-    static const _ARG_CHANGELOG         = 'changelog';
-    static const _ARG_CHANGELOG_KEYS    = 'keys';
+    final Options options;
 
-    ArgParser _parser;
-
-    Application() : _parser = Application._createOptions();
+    Application() : options = new Options();
 
     void run(final List<String> args) {
 
         try {
-            final ArgResults argResults = _parser.parse(args);
+            final ArgResults argResults = options.parse(args);
             final Config config = new Config(argResults);
 
             _configLogging(config.loglevel);
 
-            if (argResults.wasParsed(_ARG_HELP) || (/*config.dirstoscan.length == 0 && */
+            if (argResults.wasParsed(Options._ARG_HELP) || (/*config.dirstoscan.length == 0 && */
                 args.length == 0 )) {
-                _showUsage();
+                options.showUsage();
+                return;
             }
-            else if (argResults.wasParsed(_ARG_SETTINGS)) {
+
+            if (argResults.wasParsed(Options._ARG_SETTINGS)) {
                 _printSettings(config.settings);
+                return;
             }
-            else if (argResults.wasParsed(_ARG_CHANGELOG_KEYS)) {
+
+            if (argResults.wasParsed(Options._ARG_CHANGELOG_KEYS)) {
                     _printChangelogLabels();
-                }
-            else if (argResults.wasParsed(_ARG_INIT)) {
-                    _initRepo(argResults[_ARG_INIT]);
-                }
-                else if (argResults.wasParsed(_ARG_CHANGELOG)) {
-                        _writeChangeLog(config.settings);
-                    }
-                    else {
-                        _showUsage();
-                    }
+            }
+
+            if (argResults.wasParsed(Options._ARG_INIT)) {
+                _initRepo(argResults[Options._ARG_INIT]);
+            }
+            else if (argResults.wasParsed(Options._ARG_CHANGELOG)) {
+                _writeChangeLog(config.simulation);
+            }
+            else {
+                options.showUsage();
+            }
         }
 
         on FormatException
         catch (error) {
-            _showUsage();
+            options.showUsage();
             _logger.severe("Error: $error");
         }
     }
@@ -85,8 +83,7 @@ class Application {
         _logger.info("    and 'git push -u origin --tags'");
     }
 
-    void _writeChangeLog(final Map<String,String> settings) {
-        Validate.notEmpty(settings);
+    void _writeChangeLog(final bool isSimulation) {
 
         final File file = new File("CHANGELOG.md");
         if(file.existsSync()) { file.deleteSync(); }
@@ -99,9 +96,8 @@ class Application {
         }
 
         void iterateThroughSection(final String tag, final String tagRange,final _LogSections sections,{ final bool isUnreleased: false }) {
-            _logger.info("$tag, ${isUnreleased ? '' : _getTagDate(tag) } ($tagRange)");
-
-            _logger.info(_getTagHeadline(tag,tagRange));
+            _logger.fine("$tag, ${isUnreleased ? '' : _getTagDate(tag) } ($tagRange)");
+            //_logger.fine(_getTagHeadline(tag,tagRange));
 
             buffer.writeln();
             if(!isUnreleased) {
@@ -112,11 +108,11 @@ class Application {
 
             sections.names.forEach((final String key,final List<String> lines) {
                 if(lines.isNotEmpty) {
-                    _logger.info("Section: ${firsCharUppercase(key)}");
+                    _logger.fine("Section: ${firsCharUppercase(key)}");
                     buffer.writeln("###${firsCharUppercase(key)}###");
 
                     lines.forEach((final String line) {
-                        _logger.info(" - $line");
+                        _logger.fine(" * $line");
                         buffer.writeln("* ${line}");
                     });
                 }
@@ -144,8 +140,10 @@ class Application {
             }
         }
 
-        file.writeAsString(buffer.toString());
-        _logger.info("${file.path} created...");
+        if(!isSimulation) {
+            file.writeAsString(buffer.toString());
+            _logger.info("${file.path} created...");
+        }
     }
 
     void _printChangelogLabels() {
@@ -160,12 +158,19 @@ class Application {
     _LogSections _getLogSections(final String forTag) {
         Validate.notBlank(forTag);
 
-        final String ghaccount = _getAccountName();
-        final String ghproject = _getRepoName().replaceFirst(r".git","");
+        final Repo repo = new Repo();
+        String changelogformat;
+        if(repo.isValid) {
+            final String ghaccount = repo.account;
+            final String ghproject = repo.name.replaceFirst(r".git","");
+            final String baseurl = repo.baseUrl;
 
-        // pretty-format: http://opensource.apple.com/source/Git/Git-19/src/git-htmldocs/pretty-formats.txt
-        final String changelogformat = "%s [%h](http://github.com/$ghaccount/$ghproject/commit/%H)";
-        _logger.fine(changelogformat);
+            // pretty-format: http://opensource.apple.com/source/Git/Git-19/src/git-htmldocs/pretty-formats.txt
+            changelogformat = "%s [%h](http://$baseurl/$ghaccount/$ghproject/commit/%H)";
+        } else {
+            changelogformat = "%s [%h]";
+        }
+        //_logger.fine(changelogformat);
 
         //'git', 'log',range , "--pretty=format:$changelogformat"
         final ProcessResult resultGetLog = Process.runSync('git', ["log", forTag , "--pretty=format:$changelogformat"]);
@@ -176,7 +181,7 @@ class Application {
         final _LogSections sections = new _LogSections();
         resultGetLog.stdout.split(new RegExp(r"\n+|\r+")).forEach((final String line) {
             if(line.isNotEmpty) {
-                sections.addLineToSection(line);
+                sections.addLogLineToSection(line);
             }
         });
 
@@ -193,35 +198,14 @@ class Application {
         return user;
     }
 
-    String _getRepoName() {
-        final ProcessResult resultGetRepo = Process.runSync('git', ["config", "--get" , "remote.origin.url"]);
-        if(resultGetRepo.exitCode != 0) {
-            _logger.severe("Get remote.origin.url faild with ${resultGetRepo.stderr}!");
-        }
-        final String repository = resultGetRepo.stdout.replaceFirst(new RegExp(r"[^/]*/"),"").trim();
-        _logger.fine("Repository: $repository");
-        return repository;
-    }
-
-    String _getAccountName() {
-        final ProcessResult resultGetRepo = Process.runSync('git', ["config", "--get" , "remote.origin.url"]);
-        if(resultGetRepo.exitCode != 0) {
-            _logger.severe("Get remote.origin.url faild with ${resultGetRepo.stderr}!");
-        }
-        String accountname = resultGetRepo.stdout.replaceFirst(new RegExp(r"[^:]*:"),"").trim();
-        accountname = accountname.replaceFirst(new RegExp(r"/.*"),"").trim();
-        _logger.fine("AccountName: $accountname");
-        return accountname;
-    }
-
     String _getTagDate(final String tag) {
         Validate.notBlank(tag);
 
-        final ProcessResult resultGetTagDate = Process.runSync('git', ["log", "-1" , "--format=%ai", tag ]);
-        if(resultGetTagDate.exitCode != 0) {
-            _logger.severe("Get Date for Tag $tag faild with ${resultGetTagDate.stderr}!");
+        final ProcessResult result = Process.runSync('git', ["log", "-1" , "--format=%ai", tag ]);
+        if(result.exitCode != 0) {
+            _logger.severe("Get Date for Tag $tag faild with ${result.stderr}!");
         }
-        final String date = resultGetTagDate.stdout.replaceFirst(new RegExp(r" .*"),"").trim();
+        final String date = result.stdout.replaceFirst(new RegExp(r" .*"),"").trim();
         _logger.fine("Date: $date");
         return date;
     }
@@ -230,10 +214,19 @@ class Application {
         Validate.notBlank(tag);
         Validate.notBlank(range);
 
-        final String ghaccount = _getAccountName();
-        final String ghproject = _getRepoName().replaceFirst(r".git","");
+        final Repo repo = new Repo();
+        String headline;
+        if(repo.isValid) {
+            final String ghaccount = repo.account;
+            final String ghproject = repo.name.replaceFirst(r".git","");
+            final String baseurl = repo.baseUrl;
 
-        final String headline = "[$tag](http://github.com/$ghaccount/$ghproject/compare/$range)";
+            headline = "[$tag](http://$baseurl/$ghaccount/$ghproject/compare/$range)";
+
+        } else {
+            headline = "$tag";
+        }
+
         return headline;
     }
 
@@ -244,21 +237,21 @@ class Application {
         if(resultGetTags.exitCode != 0) {
             _logger.severe("'Tag-Request failed with error ${resultGetTags.stderr}!");
         }
-        final List<String> lines = new List<String>();
+        final List<String> tags = new List<String>();
 
         resultGetTags.stdout.split(new RegExp(r"\s+")).forEach((final String tag) {
             if(tag.isNotEmpty) {
-                lines.add(tag);
+                tags.add(tag);
             }
         });
 
-        lines.sort((final String one, final String two) {
+        tags.sort((final String one, final String two) {
             return one.compareTo(two) * -1;
         });
 
-        _logger.fine(lines);
+        _logger.fine("Tags with annotation (git tag -am v1.1): $tags");
 
-        return lines;
+        return tags;
     }
 
     /// Goes through the files
@@ -293,17 +286,6 @@ class Application {
         }
     }
 
-    void _showUsage() {
-        print("Usage: git-init [options]");
-        _parser.getUsage().split("\n").forEach((final String line) {
-            print("    $line");
-        });
-
-        print("");
-        print("Sample:");
-        print("    git-init -i dart-wsk-angular.git");
-        print("");
-    }
 
     void _printSettings(final Map<String,String> settings) {
         Validate.notEmpty(settings);
@@ -326,20 +308,7 @@ class Application {
         });
     }
 
-    static ArgParser _createOptions() {
-        final ArgParser parser = new ArgParser()
 
-            ..addFlag(_ARG_HELP,            abbr: 'h', negatable: false, help: "Shows this message")
-            ..addFlag(_ARG_SETTINGS,        abbr: 's', negatable: false, help: "Prints settings")
-            ..addFlag(_ARG_CHANGELOG,       abbr: 'c', negatable: false, help: "Writes CHANGELOG.md")
-            ..addFlag(_ARG_CHANGELOG_KEYS,  abbr: 'k', negatable: false, help: "Print CHANGELOG keywords (lables)")
-
-            ..addOption(_ARG_INIT,          abbr: 'i', help: "[ your GIT-Repo name ]")
-            ..addOption(_ARG_LOGLEVEL,      abbr: 'v', help: "[ info | debug | warning ]")
-        ;
-
-        return parser;
-    }
 
     void _configLogging(final String loglevel) {
         Validate.notBlank(loglevel);
@@ -366,80 +335,4 @@ class Application {
     }
 }
 
-class _LogSections {
-    final Logger _logger = new Logger("gitinit._LogSections");
 
-    final List<String> features = new List<String>();
-    final List<String> fixes = new List<String>();
-    final List<String> bugs = new List<String>();
-    final List<String> docs = new List<String>();
-    final List<String> style = new List<String>();
-    final List<String> refactor = new List<String>();
-    final List<String> test = new List<String>();
-    final List<String> chore = new List<String>();
-
-    final List<String> others = new List<String>();
-
-    final Map<String,List<String>> names = new Map<String,List<String>>();
-    final Map<String,String> key2Section = new Map<String,String>();
-
-    _LogSections() {
-        names["chore"] = chore;
-        names["feature"] = features;
-        names["fixes"] = fixes;
-        names["bugs"] = bugs;
-        names["style"] = style;
-        names["docs"] = docs;
-        names["refactor"] = refactor;
-        names["test"] = test;
-
-        key2Section["feat"] = "feature";
-        key2Section["feature"] = "feature";
-        key2Section["chore"] = "chore";
-        key2Section["fix"] = "fixes";
-        key2Section["fixes"] = "fixes";
-        key2Section["bug"] = "bugs";
-        key2Section["bugs"] = "bugs";
-        key2Section["style"] = "style";
-        key2Section["doc"] = "docs";
-        key2Section["docs"] = "docs";
-        key2Section["refactor"] = "refactor";
-        key2Section["test"] = "test";
-
-        names.forEach((final String name,final List<String> lines) {
-            if(key2Section.containsKey(name) == false) {
-                throw new ArgumentError("$name ist in der key2Section-Lise nicht enthalten!!!!!");
-            }
-        });
-    }
-
-
-    void addLineToSection(final String line) {
-        if(line == null || line.isEmpty) {
-            return;
-        }
-
-        final int index = line.indexOf(":");
-        if(index == -1) {
-            others.add(line);
-            return;
-        }
-        final String section = line.substring(0,index);
-        //_logger.info("Section: $section");
-
-        if(key2Section.containsKey(section)) {
-            //_logger.info("Line: $line");
-            names[key2Section[section]].add(line.replaceFirst("${section}:","").trim());
-        } else {
-            others.add(line);
-        }
-    }
-
-    bool isEmpty({ final bool includeOthers: false }) {
-        bool empty = features.isEmpty && fixes.isEmpty && docs.isEmpty && style.isEmpty && refactor.isEmpty && test.isEmpty && chore.isEmpty;
-        if(includeOthers) {
-            empty = empty && others.isEmpty;
-        }
-        return empty;
-    }
-}

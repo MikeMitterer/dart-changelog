@@ -1,9 +1,6 @@
-library gitinit;
+library githelp;
 
 import 'dart:io';
-import 'dart:async';
-import 'dart:collection';
-import 'dart:convert';
 import 'dart:math';
 
 import 'package:args/args.dart';
@@ -15,4 +12,7 @@ import 'package:validate/validate.dart';
 
 
 part "src/Config.dart";
+part "src/Options.dart";
+part "src/Repo.dart";
+part "src/LogSection.dart";
 part "src/Application.dart";

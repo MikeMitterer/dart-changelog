@@ -6,7 +6,7 @@
       <excludeFolder url="file://$MODULE_DIR$/.pub" />
       <excludeFolder url="file://$MODULE_DIR$/bin/packages" />
       <excludeFolder url="file://$MODULE_DIR$/packages/console_log_handler" />
-      <excludeFolder url="file://$MODULE_DIR$/packages/git-init" />
+      <excludeFolder url="file://$MODULE_DIR$/packages/git-help" />
       <excludeFolder url="file://$MODULE_DIR$/test/integration/packages" />
       <excludeFolder url="file://$MODULE_DIR$/test/packages" />
       <excludeFolder url="file://$MODULE_DIR$/test/unit/packages" />
