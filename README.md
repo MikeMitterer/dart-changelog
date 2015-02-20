@@ -22,12 +22,18 @@ Update
 ###Usage###
 
 ```shell
+    # your commit with a "keyword"
     git commit -am "feature: This is my new feature"
     git tag -am 0.0.1
     
+    # Write CHANGELOG.md and set the version in pubspec.yaml
     git-help -cy
+
+    # push everything to your repo
+    git push -u origin --all
+    git push -u origin --tags    
 ```
--c - Writes CHANGELOG.md
+-c - Writes CHANGELOG.md<br>
 -y - Sets the version in your pubspec.yaml
 
 "feature" is a commit keyword. All the other keywords are [here][keywords]

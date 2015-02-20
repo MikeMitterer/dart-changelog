@@ -304,7 +304,11 @@ class Application {
             final String repository = repo.repository;
             final String domain = repo.domain;
 
-            headline = "[$tag](http://$domain/$ghaccount/$repository/compare/$range)";
+            if(tag == "Unreleased") {
+                headline = "[$tag](http://$domain/$ghaccount/$repository/compare/$range)";
+            } else {
+                headline = "[$tag](http://$domain/$ghaccount/$repository/commits/$range)";
+            }
 
         } else {
             headline = "$tag";
