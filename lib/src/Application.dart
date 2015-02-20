@@ -192,7 +192,7 @@ class Application {
             return;
         }
 
-        final String tag = tags.first;
+        final String tag = tags.first.replaceAll(new RegExp(r"[a-zA-Z]"),"");
 
         if(!isSimulation) {
             final File file = new File("pubspec.yaml");
