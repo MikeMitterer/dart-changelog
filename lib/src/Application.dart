@@ -27,16 +27,25 @@ class Application {
             }
 
             if (argResults.wasParsed(Options._ARG_CHANGELOG_KEYS)) {
-                    _printChangelogLabels();
+                _printChangelogLabels();
+                return;
             }
 
-            if (argResults.wasParsed(Options._ARG_INIT)) {
-                _initRepo(argResults[Options._ARG_INIT]);
+            bool foundOptionToWorkWith = false;
+            if (argResults.wasParsed(Options._ARG_REPO_TO_INIT) && argResults.wasParsed(Options._ARG_ACCOUNT)) {
+                foundOptionToWorkWith = true;
+                initRepo(config);
             }
-            else if (argResults.wasParsed(Options._ARG_CHANGELOG)) {
-                _writeChangeLog(config.simulation);
+            if (argResults.wasParsed(Options._ARG_CHANGELOG)) {
+                foundOptionToWorkWith = true;
+                writeChangeLog(config.simulation);
             }
-            else {
+            if (argResults.wasParsed(Options._ARG_SET_VERSION_IN_YAML)) {
+                foundOptionToWorkWith = true;
+                setVersionInYaml(config.simulation);
+            }
+
+            if(!foundOptionToWorkWith) {
                 options.showUsage();
             }
         }
@@ -48,34 +57,54 @@ class Application {
         }
     }
 
-    // -- private -------------------------------------------------------------
 
-    void _initRepo(final String repoName) {
-        Validate.notBlank(repoName);
+    void initRepo(final Config config) {
+        Validate.notNull(config);
 
-        final String repository = repoName.endsWith(".git") ? repoName : "${repoName}.git";
+        final String repository = config.repotoinit.endsWith(".git") ? config.repotoinit : "${config.repotoinit}.git";
         _logger.info("Init $repository...");
 
-        final File dotGit = new File(".git");
+        final Repo repo = new Repo();
+        if(repo.isValid) {
+            _logger.info("Repo is already initialisized - nothing more todo!");
+            return;
+        }
 
-        if(!dotGit.existsSync()) {
-            // git init
-            final ProcessResult resultInit= Process.runSync('git', ["init"]);
-            if(resultInit.exitCode != 0) {
-                _logger.severe(resultInit.stderr);
+        final Repo simulatedRepo = new Repo.forSimulation(config.domain,config.account,repository);
+        if(!simulatedRepo.isValid) {
+            throw new ArgumentError("Invalid Repo-Url: ${simulatedRepo.originToAdd}");
+        }
+
+        if(config.simulation == false) {
+            final File dotGit = new File(".git");
+
+            if(!dotGit.existsSync()) {
+                // git init
+                final ProcessResult resultInit= Process.runSync('git', ["init"]);
+                if(resultInit.exitCode != 0) {
+                    _logger.severe(resultInit.stderr);
+                }
             }
-        }
 
-        // git remote add origin https://github.com/MikeMitterer/dart-wsk-material.git
-        final ProcessResult resultAddOrigin = Process.runSync('git', ["remote", "add" , "origin", "https://github.com/MikeMitterer/$repository"]);
-        if(resultAddOrigin.exitCode != 0) {
-            _logger.severe("'remote add' failed ${resultAddOrigin.stderr}");
-        }
+            // git remote add origin https://github.com/MikeMitterer/dart-wsk-material.git
+            // git remote add origin git@bitbucket.org:mikemitterer/eosflexmobile.git
+            final ProcessResult resultAddOrigin = Process.runSync('git', ["remote", "add" , "origin", simulatedRepo.originToAdd ]);
+            if(resultAddOrigin.exitCode != 0) {
+                _logger.severe("'remote add' failed ${resultAddOrigin.stderr}");
+            }
 
-        // git remote set-url origin git@github.com:MikeMitterer/dart-wsk-material.git
-        final ProcessResult resultSetUrl = Process.runSync('git', ["remote", "set-url" , "origin", "git@github.com:MikeMitterer/$repository"]);
-        if(resultSetUrl.exitCode != 0) {
-            _logger.severe("'remote set-url' faild ${resultSetUrl.stderr}}");
+            // git remote set-url origin git@github.com:MikeMitterer/dart-wsk-material.git
+            // git remote set-url origin git@bitbucket.org:mikemitterer/eosflexmobile.git
+            final ProcessResult resultSetUrl = Process.runSync('git', ["remote", "set-url" , "origin", simulatedRepo.urlToAdd ]);
+            if(resultSetUrl.exitCode != 0) {
+                _logger.severe("'remote set-url' faild ${resultSetUrl.stderr}}");
+            }
+
+        } else {
+            // -------- Simulation!!!! --------
+            _logger.info("git init");
+            _logger.info("git remote add origin ${simulatedRepo.originToAdd}");
+            _logger.info("git remote set-url origin ${simulatedRepo.urlToAdd}");
         }
 
         _logger.info("Done!");
@@ -83,7 +112,7 @@ class Application {
         _logger.info("    and 'git push -u origin --tags'");
     }
 
-    void _writeChangeLog(final bool isSimulation) {
+    void writeChangeLog(final bool isSimulation) {
 
         final File file = new File("CHANGELOG.md");
         if(file.existsSync()) { file.deleteSync(); }
@@ -142,9 +171,32 @@ class Application {
 
         if(!isSimulation) {
             file.writeAsString(buffer.toString());
-            _logger.info("\n${file.path} created...");
+            _logger.info("${file.path} created...");
         }
     }
+
+    void setVersionInYaml(final bool isSimulation) {
+        final List<String> tags = _getTags();
+        if(tags.isEmpty) {
+            _logger.warning("No tags available. Add one with 'git tag -am 0.0.1'");
+            return;
+        }
+        final File file = new File("pubspec.yaml");
+        if(!file.existsSync()) {
+            _logger.warning("${file.path} not found.");
+            return;
+        }
+
+        final String tag = tags.first;
+        String content = file.readAsStringSync();
+        content = content.replaceFirst(new RegExp(r"version: .*"),"version: $tag");
+        if(!isSimulation) {
+            file.writeAsStringSync(content);
+        }
+        _logger.info("Version in you ${file.path} is now: $tag");
+    }
+
+    // -- private -------------------------------------------------------------
 
     void _printChangelogLabels() {
         final _LogSections sections = new _LogSections();
@@ -162,11 +214,11 @@ class Application {
         String changelogformat;
         if(repo.isValid) {
             final String ghaccount = repo.account;
-            final String repository = repo.repository.replaceFirst(r".git","");
-            final String baseurl = repo.baseUrl;
+            final String repository = repo.repository;
+            final String domain = repo.domain;
 
             // pretty-format: http://opensource.apple.com/source/Git/Git-19/src/git-htmldocs/pretty-formats.txt
-            changelogformat = "%s [%h](http://$baseurl/$ghaccount/$repository/commit/%H)";
+            changelogformat = "%s [%h](http://$domain/$ghaccount/$repository/commit/%H)";
         } else {
             changelogformat = "%s [%h]";
         }
@@ -218,10 +270,10 @@ class Application {
         String headline;
         if(repo.isValid) {
             final String ghaccount = repo.account;
-            final String repository = repo.repository.replaceFirst(r".git","");
-            final String baseurl = repo.baseUrl;
+            final String repository = repo.repository;
+            final String domain = repo.domain;
 
-            headline = "[$tag](http://$baseurl/$ghaccount/$repository/compare/$range)";
+            headline = "[$tag](http://$domain/$ghaccount/$repository/compare/$range)";
 
         } else {
             headline = "$tag";
