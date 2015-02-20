@@ -307,7 +307,7 @@ class Application {
             if(tag == "Unreleased") {
                 headline = "[$tag](http://$domain/$ghaccount/$repository/compare/$range)";
             } else {
-                headline = "[$tag](http://$domain/$ghaccount/$repository/commits/$range)";
+                headline = "[$tag](http://$domain/$ghaccount/$repository/commits/$tag)";
             }
 
         } else {
