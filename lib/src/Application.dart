@@ -209,7 +209,7 @@ class Application {
     }
 
     // -- private -------------------------------------------------------------
-    String get _yamlName => _getYamlPart("name");
+    String get _yamlName => _getYamlPart("changelogname").isEmpty ? _getYamlPart("name") : _getYamlPart("changelogname");
 
     String get _yamlDescription => _getYamlPart("description");
 
