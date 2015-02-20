@@ -118,8 +118,10 @@ class Application {
 
     void writeChangeLog(final bool isSimulation) {
 
-        final File file = new File("CHANGELOG.md");
-        if(file.existsSync()) { file.deleteSync(); }
+        if(!isSimulation) {
+            final File file = new File("CHANGELOG.md");
+            if(file.existsSync()) { file.deleteSync(); }
+        }
 
         final String yamlName = _yamlName;
         final String yamlDescription = _yamlDescription;
@@ -173,7 +175,7 @@ class Application {
             final String tag = tags[index];
             //_logger.info("Tag: $tag, ${_getTagDate(tag)}");
 
-            tagRange = index < tags.length - 1 ? "${tag}...${tags[index + 1]}" : tag;
+            tagRange = index < tags.length - 1 ? "${tags[index + 1]}...${tag}" : tag;
 
             final _LogSections sections = _getLogSections(tagRange);
             if(!sections.isEmpty()) {
@@ -319,7 +321,8 @@ class Application {
             if(tag == "Unreleased") {
                 headline = "[$tag](http://$domain/$ghaccount/$repository/compare/$range)";
             } else {
-                headline = "[$tag](http://$domain/$ghaccount/$repository/commits/$tag)";
+
+                headline = "[$tag](http://$domain/$ghaccount/$repository/compare/$range)";
             }
 
         } else {
