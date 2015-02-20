@@ -1,6 +1,6 @@
 # git-help
 
-Helps with some "git" related things. Its main purpose is to write a changelog.
+Helps with some "git" related things. Its main purpose is to write a <strong>changelog</strong> file.
  
 ###Example output###
 * https://github.com/MikeMitterer/dart-git-help/CHANGELOG.md 
