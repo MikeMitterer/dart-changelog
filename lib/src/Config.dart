@@ -14,6 +14,7 @@ class Config {
 
         _settings[Options._ARG_LOGLEVEL]      = 'info';
         _settings[Options._ARG_SIMULATION]    = false;
+        _settings[Options._ARG_PUSH_TAGS]     = false;
         _settings[Options._ARG_REPO_DOMAIN]   = "github.com";
         _settings[Options._ARG_ACCOUNT]       = "<not set>";
         _settings[Options._ARG_REPO_TO_INIT]  = "<not set>";
@@ -28,6 +29,7 @@ class Config {
     String get domain => _settings[Options._ARG_REPO_DOMAIN];
     String get account => _settings[Options._ARG_ACCOUNT];
     String get repotoinit => _settings[Options._ARG_REPO_TO_INIT];
+    bool get pushtags => _settings[Options._ARG_PUSH_TAGS];
 
     Map<String,String> get settings {
         final Repo repo = new Repo();
@@ -36,6 +38,7 @@ class Config {
         settings["loglevel"]                                = loglevel;
         settings["Simulation only, no write to filesystem"] = simulation ? "yes" : "no";
         settings["Predefined origin domain"]                = repo.isValid ? repo.domain : domain;
+        settings["Push tags to origin "]                    = pushtags ? "yes" : "no";;
 
         settings["Repo is valid (remote url set)"]          = repo.isValid ? "yes" : "no";
         settings["Accout"]                                  = repo.isValid ? repo.account : account;

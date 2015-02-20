@@ -44,6 +44,10 @@ class Application {
                 foundOptionToWorkWith = true;
                 setVersionInYaml(config.simulation);
             }
+            if (argResults.wasParsed(Options._ARG_PUSH_TAGS)) {
+                foundOptionToWorkWith = true;
+                pushTagsToOrigin();
+            }
 
             if(!foundOptionToWorkWith) {
                 options.showUsage();
@@ -206,6 +210,14 @@ class Application {
             file.writeAsStringSync(content);
         }
         _logger.info("Version is set to: $tag");
+    }
+
+    void pushTagsToOrigin() {
+        final ProcessResult resultGetUser = Process.runSync('git', ["push", "origin" , "--tags"]);
+        if(resultGetUser.exitCode != 0) {
+            _logger.severe("push tags faild with ${resultGetUser.stderr}!");
+        }
+        _logger.info("All tags are pushed to your repo");
     }
 
     // -- private -------------------------------------------------------------
