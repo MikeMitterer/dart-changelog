@@ -313,7 +313,7 @@ class Application {
         return headline;
     }
 
-    /// Gibt alle Tags zurück und sortiert sie in umgekehrter Reihenfolge
+    /// Gibt alle Tags zurück den aktuellsten zuerst
     List<String> _getTags() {
         // git tag -l
         final ProcessResult resultGetTags = Process.runSync('git', ["tag", "-l"]);
@@ -321,15 +321,10 @@ class Application {
             _logger.severe("'Tag-Request failed with error ${resultGetTags.stderr}!");
         }
         final List<String> tags = new List<String>();
-
-        resultGetTags.stdout.split(new RegExp(r"\s+")).forEach((final String tag) {
+        resultGetTags.stdout.split(new RegExp(r"\s+")).reversed.forEach((final String tag) {
             if(tag.isNotEmpty) {
                 tags.add(tag);
             }
-        });
-
-        tags.sort((final String one, final String two) {
-            return one.compareTo(two) * -1;
         });
 
         _logger.fine("Tags with annotation (git tag -am v1.1): $tags");
