@@ -1,7 +1,7 @@
 #Change Log for git-help#
 Helps to write a CHANGELOG.md and with some other git related stuff
 
-##[Unreleased](http://github.com/mikemitterer/dart-git-help/compare/v1.0.1...HEAD)##
+##[v1.1.0](http://github.com/mikemitterer/dart-git-help/compare/v1.1.0...v1.0.1) - 2015-02-20##
 
 ###Feature###
 * Shows pubspec name and description in CHANGELOG [27c0473](http://github.com/mikemitterer/dart-git-help/commit/27c047343bc75152d684e9d83e25dc74ae055856)

@@ -25,8 +25,11 @@ Update
     git commit -am "feature: This is my new feature"
     git tag -am 0.0.1
     
-    git-help -c
+    git-help -cy
 ```
+-c - Writes CHANGELOG.md
+-y - Sets the version in your pubspec.yaml
+
 "feature" is a commit keyword. All the other keywords are [here][keywords]
 
 ###Commandline-options###
