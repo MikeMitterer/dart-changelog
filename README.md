@@ -36,8 +36,6 @@ Uninstall
 
     # push everything to your repo
     git push origin master
-    git push origin --all
-    git push origin --tags   
     
     # push it to pub
     pub publish 
