@@ -32,7 +32,7 @@ Uninstall
     git tag -am 0.0.1
     
     # Write CHANGELOG.md and set the version in pubspec.yaml
-    git-help -cy
+    git-help -cyt
 
     # push everything to your repo
     git push origin master
@@ -43,7 +43,8 @@ Uninstall
     pub publish 
 ```
 -c - Writes CHANGELOG.md<br>
--y - Sets the version in your pubspec.yaml
+-y - Sets the version in your pubspec.yaml<br>
+-t - pushes all tags to your repo
 
 "feature" is a commit keyword. All the other keywords are [here][keywords]
 

@@ -1,6 +1,11 @@
 #Change Log for git-help#
 Helps to write a CHANGELOG.md and with some other git related stuff
 
+##[v1.1.6](http://github.com/mikemitterer/dart-git-help/commits/v1.1.6) - 2015-02-20##
+
+###Feature###
+* -t pushes all Tags to your repo [2949cac](http://github.com/mikemitterer/dart-git-help/commit/2949cacb8181a34a5a39d803a54a3f85544dbca2)
+
 ##[v1.1.5](http://github.com/mikemitterer/dart-git-help/commits/v1.1.5) - 2015-02-20##
 
 ###Feature###
