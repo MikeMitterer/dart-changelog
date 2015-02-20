@@ -1,6 +1,11 @@
 #Change Log for git-help#
 Helps to write a CHANGELOG.md and with some other git related stuff
 
+##[v1.1.3](http://github.com/mikemitterer/dart-git-help/commits/v1.1.3) - 2015-02-20##
+
+###Fixes###
+* Wrong version for yaml [f4262e8](http://github.com/mikemitterer/dart-git-help/commit/f4262e84f7b793556d379590cd462d76a11a765e)
+
 ##[v1.1.2](http://github.com/mikemitterer/dart-git-help/commits/v1.1.2) - 2015-02-20##
 
 ###Fixes###
