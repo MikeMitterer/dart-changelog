@@ -31,7 +31,10 @@ Update
 
     # push everything to your repo
     git push -u origin --all
-    git push -u origin --tags    
+    git push -u origin --tags   
+    
+    # push it to pub
+    pub publish 
 ```
 -c - Writes CHANGELOG.md<br>
 -y - Sets the version in your pubspec.yaml
