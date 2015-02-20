@@ -118,8 +118,8 @@ class Application {
 
     void writeChangeLog(final bool isSimulation) {
 
+        final File file = new File("CHANGELOG.md");
         if(!isSimulation) {
-            final File file = new File("CHANGELOG.md");
             if(file.existsSync()) { file.deleteSync(); }
         }
 
