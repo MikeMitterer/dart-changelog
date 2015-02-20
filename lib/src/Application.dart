@@ -117,8 +117,16 @@ class Application {
         final File file = new File("CHANGELOG.md");
         if(file.existsSync()) { file.deleteSync(); }
 
+        final String yamlName = _yamlName;
+        final String yamlDescription = _yamlDescription;
+
         final StringBuffer buffer = new StringBuffer();
-        buffer.writeln("#Change Log#");
+        if(yamlName.isNotEmpty) {
+            buffer.writeln("#Change Log for ${yamlName}#");
+
+        } else { buffer.writeln("#Change Log#"); }
+
+        if(yamlDescription.isNotEmpty) { buffer.writeln(yamlDescription); }
 
         String firsCharUppercase(final String word) {
             return "${word.substring(0,1).toUpperCase()}${word.substring(1)}";
@@ -138,7 +146,7 @@ class Application {
             sections.names.forEach((final String key,final List<String> lines) {
                 if(lines.isNotEmpty) {
                     _logger.fine("Section: ${firsCharUppercase(key)}");
-                    buffer.writeln("###${firsCharUppercase(key)}###");
+                    buffer.writeln("\n###${firsCharUppercase(key)}###");
 
                     lines.forEach((final String line) {
                         _logger.fine(" * $line");
@@ -171,8 +179,10 @@ class Application {
 
         if(!isSimulation) {
             file.writeAsString(buffer.toString());
-            _logger.info("${file.path} created...");
+        } else {
+            _logger.info(buffer.toString());
         }
+        _logger.info("${file.path} created...");
     }
 
     void setVersionInYaml(final bool isSimulation) {
@@ -181,22 +191,43 @@ class Application {
             _logger.warning("No tags available. Add one with 'git tag -am 0.0.1'");
             return;
         }
-        final File file = new File("pubspec.yaml");
-        if(!file.existsSync()) {
-            _logger.warning("${file.path} not found.");
-            return;
-        }
 
         final String tag = tags.first;
-        String content = file.readAsStringSync();
-        content = content.replaceFirst(new RegExp(r"version: .*"),"version: $tag");
+
         if(!isSimulation) {
+            final File file = new File("pubspec.yaml");
+            if(!file.existsSync()) {
+                _logger.warning("${file.path} not found.");
+                return;
+            }
+            String content = file.readAsStringSync();
+            content = content.replaceFirst(new RegExp(r"version: .*"),"version: $tag");
+
             file.writeAsStringSync(content);
         }
-        _logger.info("Version in you ${file.path} is now: $tag");
+        _logger.info("Version is set to: $tag");
     }
 
     // -- private -------------------------------------------------------------
+    String get _yamlName => _getYamlPart("name");
+
+    String get _yamlDescription => _getYamlPart("description");
+
+    String _getYamlPart(final String part) {
+        Validate.notBlank(part);
+
+        final File file = new File("pubspec.yaml");
+        if(!file.existsSync()) {
+            return "";
+        }
+        final RegExp regexp = new RegExp("$part: (.*)");
+        final String content = file.readAsStringSync();
+        final Match m = regexp.firstMatch(content);
+        if(m == null) {
+            return "";
+        }
+        return m[1];
+    }
 
     void _printChangelogLabels() {
         final _LogSections sections = new _LogSections();

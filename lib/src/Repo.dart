@@ -29,7 +29,7 @@ abstract class Repo {
         final ProcessResult result = Process.runSync('git', ["config", "--get", "remote.origin.url"]);
         if (result == null || result.stdout.isEmpty || result.exitCode != 0) {
             _logger.fine("Get remote.origin.url faild. ${result.stderr}, using DummyRepo instead!");
-            return new _DummyRepo();
+            return new _DummyRepo((result == null || result.stdout.isEmpty) ? "<not set>" : result.stdout as String);
         }
         final String originUrl = result.stdout as String;
         if (originUrl.contains("github")) {

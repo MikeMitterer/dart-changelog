@@ -31,11 +31,12 @@ class Options {
 
         print("");
         print("Sample:");
-        print("    Init GitHub repo:         '$APPNAME -a YourName -i yourrepo.git'");
-        print("    Simulate initialisation:  '$APPNAME -d -a YourName -i yourrepo.git'");
-        print("    Simulate BitBucket init:  '$APPNAME -d -r bibucket.org -a YourName -i yourrepo.git'");
+        print("    Init GitHub repo:           '$APPNAME -a YourName -i yourrepo.git'");
+        print("    Simulate initialisation:    '$APPNAME -d -a YourName -i yourrepo.git'");
+        print("    Simulate BitBucket init:    '$APPNAME -d -r bibucket.org -a YourName -i yourrepo.git'");
         print("");
-        print("    Write CHANGELOG.md:       '$APPNAME -c'");
+        print("    Write CHANGELOG.md:         '$APPNAME -c'");
+        print("    Set version in pubspec.yaml '$APPNAME -y'");
         print("");
     }
 
