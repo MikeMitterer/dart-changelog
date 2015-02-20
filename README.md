@@ -1,4 +1,4 @@
-# git-help for CHANGELOG.md
+# githelp for CHANGELOG.md
 
 Helps with some "git" related things. Its main purpose is to write a <strong>CHANGELOG.md</strong> file.
 You can also set the version of your pubspec.yaml according to the latest git tag.
@@ -10,13 +10,18 @@ You can also set the version of your pubspec.yaml according to the latest git ta
 
 Install
 ```shell
-    pub global activate git-help
+    pub global activate githelp
 ```
 
 Update
 ```shell
     # activate git-help again
-    pub global activate git-help
+    pub global activate githelp
+```
+
+Uninstall
+```shell
+    pub global deactivate githelp
 ```
 
 ###Usage + Workflow###

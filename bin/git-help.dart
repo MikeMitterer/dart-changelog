@@ -1,4 +1,4 @@
-import 'package:git-help/githelp.dart';
+import 'package:githelp/githelp.dart';
 
 void main(List<String> arguments) {
     final Application application = new Application();
