@@ -35,8 +35,9 @@ Uninstall
     git-help -cy
 
     # push everything to your repo
-    git push -u origin --all
-    git push -u origin --tags   
+    git push origin master
+    git push origin --all
+    git push origin --tags   
     
     # push it to pub
     pub publish 
