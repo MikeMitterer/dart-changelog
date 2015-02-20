@@ -4,7 +4,7 @@ Helps with some "git" related things. Its main purpose is to write a <strong>CHA
 You can also set the version of your pubspec.yaml according to the latest git tag.
  
 ###Example output###
-* https://github.com/MikeMitterer/dart-git-help/CHANGELOG.md 
+* https://github.com/MikeMitterer/dart-git-help/blob/master/CHANGELOG.md
 
 ###Installation###
 
