@@ -1,9 +1,10 @@
 #Change Log for git-help#
 Helps to write a CHANGELOG.md and with some other git related stuff
 
-##[Unreleased](http://github.com/mikemitterer/dart-git-help/compare/v1.1.1...HEAD)##
+##[v1.1.2](http://github.com/mikemitterer/dart-git-help/commits/v1.1.2) - 2015-02-20##
 
 ###Fixes###
+* link for tag headline [92335fc](http://github.com/mikemitterer/dart-git-help/commit/92335fc12509a09301a765853532334ce327a475)
 * link for tag headline [bd60c32](http://github.com/mikemitterer/dart-git-help/commit/bd60c326f329d2fbea4e337cba9953a3feb7bca0)
 
 ##[v1.1.1](http://github.com/mikemitterer/dart-git-help/commits/v1.1.1) - 2015-02-20##
