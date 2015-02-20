@@ -19,7 +19,7 @@ Update
     pub global activate git-help
 ```
 
-###Usage###
+###Usage + Workflow###
 
 ```shell
     # your commit with a "keyword"
