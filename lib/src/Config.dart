@@ -31,6 +31,26 @@ class Config {
     String get repotoinit => _settings[Options._ARG_REPO_TO_INIT];
     bool get pushtags => _settings[Options._ARG_PUSH_TAGS];
 
+    void printSettings() {
+
+        int getMaxKeyLength() {
+            int length = 0;
+            settings.keys.forEach((final String key) => length = max(length,key.length));
+            return length;
+        }
+
+        final int maxKeyLeght = getMaxKeyLength();
+
+        String prepareKey(final String key) {
+            return "${key[0].toUpperCase()}${key.substring(1)}:".padRight(maxKeyLeght + 1);
+        }
+
+        print("Settings:");
+        settings.forEach((final String key,final String value) {
+            print("    ${prepareKey(key)} $value");
+        });
+    }
+
     Map<String,String> get settings {
         final Repo repo = new Repo();
         final Map<String,String> settings = new Map<String,String>();

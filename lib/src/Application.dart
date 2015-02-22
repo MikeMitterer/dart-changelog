@@ -22,7 +22,7 @@ class Application {
             }
 
             if (argResults.wasParsed(Options._ARG_SETTINGS)) {
-                _printSettings(config.settings);
+                config.printSettings();
                 return;
             }
 
@@ -382,29 +382,6 @@ class Application {
             });
         }
     }
-
-
-    void _printSettings(final Map<String,String> settings) {
-        Validate.notEmpty(settings);
-
-        int getMaxKeyLength() {
-            int length = 0;
-            settings.keys.forEach((final String key) => length = max(length,key.length));
-            return length;
-        }
-
-        final int maxKeyLeght = getMaxKeyLength();
-
-        String prepareKey(final String key) {
-            return "${key[0].toUpperCase()}${key.substring(1)}:".padRight(maxKeyLeght + 1);
-        }
-
-        print("Settings:");
-        settings.forEach((final String key,final String value) {
-            print("    ${prepareKey(key)} $value");
-        });
-    }
-
 
 
     void _configLogging(final String loglevel) {
