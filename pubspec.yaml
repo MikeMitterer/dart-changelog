@@ -1,6 +1,6 @@
 name: githelp
 changelogname: git-help
-version: 1.1.8
+version: 1.1.9
 description: Helps to write a CHANGELOG.md and with some other git related stuff
 author: office@mikemitterer.at
 homepage: https://github.com/MikeMitterer/dart-git-help

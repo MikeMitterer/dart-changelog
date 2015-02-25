@@ -1,6 +1,11 @@
 #Change Log for git-help#
 Helps to write a CHANGELOG.md and with some other git related stuff
 
+##[v1.1.9](http://github.com/mikemitterer/dart-git-help/compare/v1.1.8...v1.1.9) - 2015-02-25##
+
+###Feature###
+* Added -x option. This options combines -c (Changelog) -y (set version in pubspec) and -t (push all tags to origin) [b5793ab](http://github.com/mikemitterer/dart-git-help/commit/b5793ab1763330cf514f89990a539e0b4a0340d5)
+
 ##[v1.1.8](http://github.com/mikemitterer/dart-git-help/compare/v1.1.7...v1.1.8) - 2015-02-20##
 
 ###Fixes###
