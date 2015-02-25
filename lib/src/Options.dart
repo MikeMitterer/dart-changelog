@@ -14,6 +14,7 @@ class Options {
     static const _ARG_ACCOUNT               = 'account';
     static const _ARG_SET_VERSION_IN_YAML   = "yaml";
     static const _ARG_PUSH_TAGS             = "tags";
+    static const _ARG_RELEASE               = "release";
 
     final ArgParser _parser;
 
@@ -53,6 +54,7 @@ class Options {
             ..addFlag(_ARG_SIMULATION,          abbr: 'd', negatable: false, help: "Simulation, no write operations")
             ..addFlag(_ARG_SET_VERSION_IN_YAML, abbr: 'y', negatable: false, help: "Set version in pubspec.yaml")
             ..addFlag(_ARG_PUSH_TAGS,           abbr: 't', negatable: false, help: "Push tags to origin")
+            ..addFlag(_ARG_RELEASE,             abbr: 'x', negatable: false, help: "Combines -c -t and -y")
 
             ..addOption(_ARG_REPO_TO_INIT,  abbr: 'i', help: "[ your GIT-Repo name ]")
             ..addOption(_ARG_REPO_DOMAIN,   abbr: 'r', help: "[ Domain where your repo is ]")

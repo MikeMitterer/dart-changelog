@@ -49,6 +49,13 @@ class Application {
                 pushTagsToOrigin();
             }
 
+            if (argResults.wasParsed(Options._ARG_RELEASE)) {
+                foundOptionToWorkWith = true;
+                writeChangeLog(config.simulation);
+                setVersionInYaml(config.simulation);
+                pushTagsToOrigin();
+            }
+
             if(!foundOptionToWorkWith) {
                 options.showUsage();
             }
