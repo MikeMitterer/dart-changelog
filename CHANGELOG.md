@@ -1,6 +1,11 @@
 #Change Log for git-help#
 Helps to write a CHANGELOG.md and with some other git related stuff
 
+##[v1.2.0](http://github.com/mikemitterer/dart-git-help/compare/v1.1.9...v1.2.0) - 2015-03-09##
+
+###Fixes###
+* Uses console_log_handler from packages and not from local path [932c983](http://github.com/mikemitterer/dart-git-help/commit/932c983bbee988f95fccb23ac146b450b865edfa)
+
 ##[v1.1.9](http://github.com/mikemitterer/dart-git-help/compare/v1.1.8...v1.1.9) - 2015-02-25##
 
 ###Feature###
