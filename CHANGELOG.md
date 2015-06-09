@@ -1,5 +1,10 @@
 #Change Log for changelog#
-Helps to write a CHANGELOG.md and with some other git related stuff
+Helps to write your CHANGELOG.md
+
+##[Unreleased](http://github.com/mikemitterer/dart-git-help/compare/v1.3.1...HEAD)##
+
+###Docs###
+* Description in pubspec.yaml changed [53ce281](http://github.com/mikemitterer/dart-git-help/commit/53ce2819f81780a0d3d34027fff43fa65e52c0b8)
 
 ##[v1.3.0](http://github.com/mikemitterer/dart-git-help/compare/v1.2.0...v1.3.0) - 2015-06-09##
 
