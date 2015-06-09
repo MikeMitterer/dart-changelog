@@ -1,7 +1,7 @@
 name: changelog
 changelogname: changelog
 version: 1.3.0
-description: Helps to write a CHANGELOG.md and with some other git related stuff
+description: Helps to write your CHANGELOG.md
 author: office@mikemitterer.at
 homepage: https://github.com/MikeMitterer/dart-git-help
 
