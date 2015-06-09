@@ -1,5 +1,10 @@
-#Change Log for git-help#
+#Change Log for changelog#
 Helps to write a CHANGELOG.md and with some other git related stuff
+
+##[v1.3.0](http://github.com/mikemitterer/dart-git-help/compare/v1.2.0...v1.3.0) - 2015-06-09##
+
+###Refactor###
+* Renamed git-help to changelog [f128d5b](http://github.com/mikemitterer/dart-git-help/commit/f128d5b62484f7346eaad72cbce3e6f44e0c463f)
 
 ##[v1.2.0](http://github.com/mikemitterer/dart-git-help/compare/v1.1.9...v1.2.0) - 2015-03-09##
 

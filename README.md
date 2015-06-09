@@ -34,7 +34,7 @@ Uninstall
     # Write CHANGELOG.md and set the version in pubspec.yaml
     changelog -x
     
-    # Push CHANGELOG to origin
+    # Push CHANGELOG.md and the changed (version) pubspec.yaml to origin
     git commit -am "Released 0.0.1"
     git push origin master
 
