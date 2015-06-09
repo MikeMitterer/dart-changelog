@@ -1,7 +1,7 @@
-# githelp for CHANGELOG.md
-
-Helps with some "git" related things. Its main purpose is to write a <strong>CHANGELOG.md</strong> file.
+# changelog for Dart
+Its main purpose is to write a <strong>CHANGELOG.md</strong> file.
 You can also set the version of your pubspec.yaml according to the latest git tag.
+Helps with some "git" related stuff. (Mainly initializing the local repo) 
  
 ###Example output###
 * https://github.com/MikeMitterer/dart-git-help/blob/master/CHANGELOG.md
@@ -10,18 +10,18 @@ You can also set the version of your pubspec.yaml according to the latest git ta
 
 Install
 ```shell
-    pub global activate githelp
+    pub global activate changelog
 ```
 
 Update
 ```shell
-    # activate git-help again
-    pub global activate githelp
+    # activate changelog again
+    pub global activate changelog
 ```
 
 Uninstall
 ```shell
-    pub global deactivate githelp
+    pub global deactivate changelog
 ```
 
 ###Usage + Workflow###
@@ -29,10 +29,14 @@ Uninstall
 ```shell
     # your commit with a "keyword"
     git commit -am "feature: This is my new feature"
-    git tag -am 0.0.1
+    git tag 0.0.1 or git tag -am 0.0.1
     
     # Write CHANGELOG.md and set the version in pubspec.yaml
-    git-help -cyt
+    changelog -x
+    
+    # Push CHANGELOG to origin
+    git commit -am "Released 0.0.1"
+    git push origin master
 
     # push everything to your repo
     git push origin master
@@ -44,28 +48,54 @@ Uninstall
 -y - Sets the version in your pubspec.yaml<br>
 -t - pushes all tags to your repo
 
-"feature" is a commit keyword. All the other keywords are [here][keywords]
+"feature" is a commit keyword.
+Supported keywords are:
+```shell
+Labels:
+	feat      Sample: git commit -am "feat: <your message>"
+	feature   Sample: git commit -am "feature: <your message>"
+	chore     Sample: git commit -am "chore: <your message>"
+	fix       Sample: git commit -am "fix: <your message>"
+	fixes     Sample: git commit -am "fixes: <your message>"
+	bug       Sample: git commit -am "bug: <your message>"
+	bugs      Sample: git commit -am "bugs: <your message>"
+	style     Sample: git commit -am "style: <your message>"
+	doc       Sample: git commit -am "doc: <your message>"
+	docs      Sample: git commit -am "docs: <your message>"
+	refactor  Sample: git commit -am "refactor: <your message>"
+	reorganizeSample: git commit -am "reorganize: <your message>"
+	reorg     Sample: git commit -am "reorg: <your message>"
+	test      Sample: git commit -am "test: <your message>"
+```
+All the other keywords are [here][keywords]
+
+Instead of using `changelog [options]` you can also use `cl [options]
 
 ###Commandline-options###
 
 ```shell
-Usage: git-help [options]
+Usage: changelog [options]
     -h, --help          Shows this message
     -s, --settings      Prints settings
     -c, --changelog     Writes CHANGELOG.md
     -k, --keys          Print CHANGELOG keywords (lables)
     -d, --simulation    Simulation, no write operations
+    -y, --yaml          Set version in pubspec.yaml
+    -t, --tags          Push tags to origin
+    -x, --release       Combines -c -t and -y
     -i, --init          [ your GIT-Repo name ]
     -r, --domain        [ Domain where your repo is ]
     -v, --loglevel      [ info | debug | warning ]
     -a, --account       [ Your account @ GitHub, BitBucket... ]
 
 Sample:
-    Init repo:                'git-help -a YourName -i yourrepo.git'
-    Simpulate initialisation: 'git-help -d -a YourName -i yourrepo.git'
-    Simpulate BitBucket init: 'git-help -d -r bibucket.org -a YourName -i yourrepo.git'
+    Write CHANGELOG.md:                                              'changelog -c'
+    Set version in pubspec.yaml                                      'changelog -y'
+    Write CHANGELOG, update Version in pubspec, push tags to origin: 'changelog -x'
 
-    Write CHANGELOG.md:       'git-help -c'
+    Init GitHub repo:           'changelog -a YourName -i yourrepo.git'
+    Simulate initialisation:    'changelog -d -a YourName -i yourrepo.git'
+    Simulate BitBucket init:    'changelog -d -r bibucket.org -a YourName -i yourrepo.git'
 ``` 
 
 ###License###

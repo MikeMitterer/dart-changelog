@@ -1,7 +1,7 @@
 part of githelp;
 
 class Options {
-    static const APPNAME                = 'git-help';
+    static const APPNAME                = 'changelog';
 
     static const _ARG_HELP                  = 'help';
     static const _ARG_LOGLEVEL              = 'loglevel';
@@ -33,12 +33,13 @@ class Options {
 
         print("");
         print("Sample:");
+        print("    Write CHANGELOG.md:                                              '$APPNAME -c'");
+        print("    Set version in pubspec.yaml                                      '$APPNAME -y'");
+        print("    Write CHANGELOG, update Version in pubspec, push tags to origin: '$APPNAME -x'");
+        print("");
         print("    Init GitHub repo:           '$APPNAME -a YourName -i yourrepo.git'");
         print("    Simulate initialisation:    '$APPNAME -d -a YourName -i yourrepo.git'");
         print("    Simulate BitBucket init:    '$APPNAME -d -r bibucket.org -a YourName -i yourrepo.git'");
-        print("");
-        print("    Write CHANGELOG.md:         '$APPNAME -c'");
-        print("    Set version in pubspec.yaml '$APPNAME -y'");
         print("");
     }
 

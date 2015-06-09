@@ -1,5 +1,5 @@
-name: githelp
-changelogname: git-help
+name: changelog
+changelogname: changelog
 version: 1.2.0
 description: Helps to write a CHANGELOG.md and with some other git related stuff
 author: office@mikemitterer.at
@@ -13,7 +13,8 @@ environment:
 #   pub global activate --source path .
 #
 executables:
-  git-help:
+  changelog:
+  cl: changelog
 
 dependencies:
   logging: any

@@ -5,7 +5,7 @@
     <content url="file://$MODULE_DIR$">
       <excludeFolder url="file://$MODULE_DIR$/.pub" />
       <excludeFolder url="file://$MODULE_DIR$/bin/packages" />
-      <excludeFolder url="file://$MODULE_DIR$/packages/githelp" />
+      <excludeFolder url="file://$MODULE_DIR$/packages/changelog" />
       <excludeFolder url="file://$MODULE_DIR$/test/integration/packages" />
       <excludeFolder url="file://$MODULE_DIR$/test/packages" />
       <excludeFolder url="file://$MODULE_DIR$/test/unit/packages" />
