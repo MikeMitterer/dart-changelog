@@ -104,8 +104,8 @@ class RepoGitHub implements Repo {
     String get domain {
         String baseurl = _originUrl.replaceFirst(new RegExp(r"[^@]*@"), "").trim();
         baseurl = baseurl.replaceFirst(new RegExp(r":.*"), "").trim();
-        _logger.info("OriginURL: $_originUrl");
-        _logger.info("BaseUrl: $baseurl");
+        _logger.finer("OriginURL: $_originUrl");
+        _logger.finer("BaseUrl: $baseurl");
         return baseurl;
     }
 
