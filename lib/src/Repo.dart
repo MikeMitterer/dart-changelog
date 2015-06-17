@@ -32,8 +32,11 @@ abstract class Repo {
             return new _DummyRepo((result == null || result.stdout.isEmpty) ? "<not set>" : result.stdout as String);
         }
         final String originUrl = result.stdout as String;
-        if (originUrl.contains("github")) {
+        if (originUrl.contains("github") && originUrl.contains("@")) {
             return new RepoGitHub(originUrl);
+
+        } else if(originUrl.contains("github")) {
+            return new RepoGitHubVII(originUrl);
 
         } else if(originUrl.contains("bitbucket")) {
             return new RepoBitBucket(originUrl);
@@ -50,7 +53,7 @@ abstract class Repo {
         Validate.notBlank(simulationAccount);
         Validate.notBlank(simulationRepository);
 
-        if (simulationDomain.contains("github")) {
+        if (simulationDomain.contains("github") && simulationDomain.contains("@")) {
             return new RepoGitHub("git@${simulationDomain}:${simulationAccount}/$simulationRepository");
 
         } else if(simulationDomain.contains("bitbucket")) {
@@ -101,7 +104,8 @@ class RepoGitHub implements Repo {
     String get domain {
         String baseurl = _originUrl.replaceFirst(new RegExp(r"[^@]*@"), "").trim();
         baseurl = baseurl.replaceFirst(new RegExp(r":.*"), "").trim();
-        _logger.finer("BaseUrl: $baseurl");
+        _logger.info("OriginURL: $_originUrl");
+        _logger.info("BaseUrl: $baseurl");
         return baseurl;
     }
 
@@ -117,6 +121,53 @@ class RepoGitHub implements Repo {
     String get repository {
         String repository = _originUrl.replaceFirst(new RegExp(r"[^/]*/"), "").trim();
         repository = repository.replaceFirst(r".git","");
+
+        _logger.finer("Repository: $repository");
+        return repository;
+    }
+
+    /// Sample: git@github.com:MikeMitterer/dart-wsk-material.git
+    String get urlToAdd => "git@${domain}:${account}/${repository}.git";
+
+
+    /// Sample GH: https://github.com/MikeMitterer/dart-wsk-material.git
+    String get originToAdd => "https://${domain}/${account}/${repository}.git";
+}
+
+class RepoGitHubVII implements Repo {
+    final Logger _logger = new Logger("githelp.RepoGitHubVII");
+
+    // remote.origin.url=https://github.com/MikeMitterer/dart-dasic.git
+    final String _originUrl;
+    Uri _uri;
+
+    RepoGitHubVII(this._originUrl) {
+        Validate.notBlank(_originUrl);
+        _uri = Uri.parse(_originUrl);
+    }
+
+    bool get isValid => true;
+
+    /// github.com
+    String get domain {
+        String baseurl = _uri.host;
+        _logger.fine("BaseUrl: $baseurl");
+        return baseurl;
+    }
+
+    /// MikeMitterer
+    String get account {
+        String accountname = _uri.path.replaceFirst("/","");
+        accountname = accountname.replaceFirst(new RegExp(r"/.*"), "").trim().toLowerCase();
+        _logger.finer("AccountName: $accountname");
+        return accountname;
+    }
+
+    /// dart-wsk-material
+    String get repository {
+        String repository = _uri.path.trim().replaceFirst(new RegExp("0%A",caseSensitive: false),"").replaceFirst("/","");
+        repository = repository.replaceFirst(new RegExp(r"[^/]*/"),"");
+        repository = repository.replaceAll(new RegExp(r"(?:(\.git|%0A\.git|%0A))",caseSensitive: false,multiLine: true),"");
 
         _logger.finer("Repository: $repository");
         return repository;

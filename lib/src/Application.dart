@@ -270,7 +270,7 @@ class Application {
             final String domain = repo.domain;
 
             // pretty-format: http://opensource.apple.com/source/Git/Git-19/src/git-htmldocs/pretty-formats.txt
-            changelogformat = "%s [%h](http://$domain/$ghaccount/$repository/commit/%H)";
+            changelogformat = "%s [%h](https://$domain/$ghaccount/$repository/commit/%H)";
         } else {
             changelogformat = "%s [%h]";
         }
