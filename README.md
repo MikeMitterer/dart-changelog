@@ -117,4 +117,5 @@ Sample:
 
 If this tool is helpful for you - please [(Circle)](http://gplus.mikemitterer.at/) me.
 
+
 [keywords]: https://github.com/MikeMitterer/dart-git-help/blob/master/lib/src/LogSection.dart
