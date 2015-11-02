@@ -1,6 +1,11 @@
 # Change Log for changelog
 Helps to write your CHANGELOG.md
 
+## [v1.3.5](http://github.com/mikemitterer/dart-changelog/compare/v1.3.4...v1.3.5) - 2015-11-02
+
+### Docs
+* Better README, better constraints in pubspec [69fca9e](https://github.com/mikemitterer/dart-changelog/commit/69fca9e850e7fa0cde1b52877b4a75cc1f429e1b)
+
 ## [v1.3.2](http://github.com/mikemitterer/dart-changelog/compare/v1.3.1...v1.3.2) - 2015-06-17
 
 ### Bugs
