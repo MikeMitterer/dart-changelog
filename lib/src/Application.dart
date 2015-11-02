@@ -135,9 +135,9 @@ class Application {
 
         final StringBuffer buffer = new StringBuffer();
         if(yamlName.isNotEmpty) {
-            buffer.writeln("#Change Log for ${yamlName}#");
+            buffer.writeln("# Change Log for ${yamlName}");
 
-        } else { buffer.writeln("#Change Log#"); }
+        } else { buffer.writeln("# Change Log"); }
 
         if(yamlDescription.isNotEmpty) { buffer.writeln(yamlDescription); }
 
@@ -151,15 +151,15 @@ class Application {
 
             buffer.writeln();
             if(!isUnreleased) {
-                buffer.writeln("##${_getTagHeadline(tag,tagRange)} - ${_getTagDate(tag)}##");
+                buffer.writeln("## ${_getTagHeadline(tag,tagRange)} - ${_getTagDate(tag)}");
             } else {
-                buffer.writeln("##${_getTagHeadline(tag,tagRange)}##");
+                buffer.writeln("## ${_getTagHeadline(tag,tagRange)}");
             }
 
             sections.names.forEach((final String key,final List<String> lines) {
                 if(lines.isNotEmpty) {
                     _logger.fine("Section: ${firsCharUppercase(key)}");
-                    buffer.writeln("\n###${firsCharUppercase(key)}###");
+                    buffer.writeln("\n### ${firsCharUppercase(key)}");
 
                     lines.forEach((final String line) {
                         _logger.fine(" * $line");
@@ -189,6 +189,8 @@ class Application {
                 iterateThroughSection(tag, tagRange,sections);
             }
         }
+
+        buffer.writeln("\n\nThis CHANGELOG.md was generated with [**Changelog for Dart**](https://pub.dartlang.org/packages/changelog)");
 
         if(!isSimulation) {
             file.writeAsString(buffer.toString());
