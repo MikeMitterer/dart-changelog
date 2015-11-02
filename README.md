@@ -3,10 +3,10 @@ Its main purpose is to write a <strong>CHANGELOG.md</strong> file.
 You can also set the version of your pubspec.yaml according to the latest git tag.
 Helps with some "git" related stuff. (Mainly initializing the local repo) 
  
-###Example output###
+### Example output
 * https://github.com/MikeMitterer/dart-git-help/blob/master/CHANGELOG.md
 
-###Installation###
+### Installation
 
 Install
 ```shell
@@ -24,7 +24,7 @@ Uninstall
     pub global deactivate changelog
 ```
 
-###Usage + Workflow###
+### Usage + Workflow
 
 ```shell
     # your commit with a "keyword"
@@ -71,7 +71,7 @@ All the other keywords are [here][keywords]
 
 Instead of using `changelog [options]` you can also use `cl [options]
 
-###Commandline-options###
+### Commandline-options
 
 ```shell
 Usage: changelog [options]
@@ -98,7 +98,7 @@ Sample:
     Simulate BitBucket init:    'changelog -d -r bibucket.org -a YourName -i yourrepo.git'
 ``` 
 
-###License###
+### License
 
     Copyright 2015 Michael Mitterer (office@mikemitterer.at),
     IT-Consulting and Development Limited, Austrian Branch

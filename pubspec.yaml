@@ -17,16 +17,15 @@ executables:
   cl: changelog
 
 dependencies:
-  logging: any
-  logging_handlers: any
-
-  intl: any
-  args: any
-  validate: any
-  browser_detect: any
-
-  console_log_handler: any
+  logging: ^0.11.0
+  logging_handlers: ^0.8.0
+  console_log_handler: ^0.1.0
     # path: /Volumes/Daten/DevLocal/DevDart/ConsoleLogHandler
+
+  intl: ^0.12.0
+  args: ^0.13.0
+  validate: ^1.0.0
+  browser_detect: ^1.0.0
 
 dev_dependencies:
   unittest: any
