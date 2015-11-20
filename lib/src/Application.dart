@@ -343,8 +343,8 @@ class Application {
 
     /// Gibt alle Tags zurück den aktuellsten zuerst
     List<String> _getTags() {
-        // git tag -l
-        final ProcessResult resultGetTags = Process.runSync('git', ["tag", "-l"]);
+        // git tag --sort version:refname
+        final ProcessResult resultGetTags = Process.runSync('git', ["tag", "--sort", "version:refname" ]);
         if(resultGetTags.exitCode != 0) {
             _logger.severe("'Tag-Request failed with error ${resultGetTags.stderr}!");
         }

@@ -6,7 +6,7 @@ author: office@mikemitterer.at
 homepage: https://github.com/MikeMitterer/dart-git-help
 
 environment:
-  sdk: '>=1.0.0 <2.0.0'
+    sdk: ">=1.8.0 <2.0.0"
 
 # Add the bin/git-init.dart script to the scripts pub installs.
 # Activate local repo:
