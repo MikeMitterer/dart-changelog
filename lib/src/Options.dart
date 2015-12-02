@@ -27,7 +27,7 @@ class Options {
 
     void showUsage() {
         print("Usage: $APPNAME [options]");
-        _parser.getUsage().split("\n").forEach((final String line) {
+        _parser.usage.split("\n").forEach((final String line) {
             print("    $line");
         });
 

@@ -28,4 +28,4 @@ dependencies:
   browser_detect: ^1.0.0
 
 dev_dependencies:
-  unittest: any
+  test: any

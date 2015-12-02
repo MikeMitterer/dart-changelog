@@ -294,16 +294,6 @@ class Application {
         return sections;
     }
 
-    String _getUser() {
-        final ProcessResult resultGetUser = Process.runSync('git', ["config", "--get" , "user.name"]);
-        if(resultGetUser.exitCode != 0) {
-            _logger.severe("Get user.name faild with ${resultGetUser.stderr}!");
-        }
-        final String user = resultGetUser.stdout.trim();
-        _logger.fine("User: $user");
-        return user;
-    }
-
     String _getTagDate(final String tag) {
         Validate.notBlank(tag);
 
@@ -359,39 +349,6 @@ class Application {
 
         return tags;
     }
-
-    /// Goes through the files
-    void _iterateThroughDirSync(final String dir, void callback(final File file)) {
-        _logger.info("Scanning: $dir");
-
-        // its OK if the path starts with packages but not if the path contains packages (avoid recursion)
-        final RegExp regexp = new RegExp("^/*packages/*");
-
-        final Directory directory = new Directory(dir);
-        if (directory.existsSync()) {
-            directory.listSync(recursive: true).where((final FileSystemEntity entity) {
-                _logger.fine("Entity: ${entity}");
-
-                bool isUsableFile = (entity != null && FileSystemEntity.isFileSync(entity.path) &&
-                ( entity.path.endsWith(".dart") || entity.path.endsWith(".DART")) || entity.path.endsWith(".html") );
-
-                if(!isUsableFile) {
-                    return false;
-                }
-                if(entity.path.contains("packages")) {
-                    // return only true if the path starts!!!!! with packages
-                    return entity.path.contains(regexp);
-                }
-
-                return true;
-
-            }).any((final File file) {
-                //_logger.fine("  Found: ${file}");
-                callback(file);
-            });
-        }
-    }
-
 
     void _configLogging(final String loglevel) {
         Validate.notBlank(loglevel);
