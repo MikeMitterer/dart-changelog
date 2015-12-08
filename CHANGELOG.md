@@ -1,6 +1,11 @@
 # Change Log for changelog
 Helps to write your CHANGELOG.md
 
+## [v1.4.0](http://github.com/mikemitterer/dart-changelog/compare/v1.3.6...v1.4.0) - 2015-12-08
+
+### Docs
+* Added Grinder [c70e1b3](https://github.com/mikemitterer/dart-changelog/commit/c70e1b3487f12a48f9a257b2a438dabff5e7e5d6)
+
 ## [v1.3.5](http://github.com/mikemitterer/dart-changelog/compare/v1.3.4...v1.3.5) - 2015-11-02
 
 ### Docs
