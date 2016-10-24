@@ -4,8 +4,16 @@ You can also set the version of your pubspec.yaml according to the latest git ta
 Helps with some "git" related stuff. (Mainly initializing the local repo) 
  
 ### Example output
-* https://github.com/MikeMitterer/dart-git-help/blob/master/CHANGELOG.md
+* https://github.com/MikeMitterer/dart-changelog/blob/master/CHANGELOG.md
 
+### How to use it
+1. *Modify your source*
+1. git commit -am "feature: My new, exciting feature"
+1. git tag v0.1.\<increase prev. version\> *(e.g. if it was v0.1.0 - set it to v0.1.1)*  
+1. cl -x *(This writes the new CHANGELOG.md and updates the version in pubspec.yaml)*
+1. git commit -am "Released v\<your new version\>" && git push && git publish
+
+  
 ### Installation
 
 Install
