@@ -1,6 +1,11 @@
 # Change Log for changelog
 Helps to write your CHANGELOG.md
 
+## [v1.4.1](http://github.com/mikemitterer/dart-changelog/compare/v1.4.0...v1.4.1) - 2016-10-24
+
+### Docs
+* Readme shows 'How to use' this lib [c7a2156](https://github.com/mikemitterer/dart-changelog/commit/c7a2156b08b5653ded6539d5cb3740564aedfcde)
+
 ## [v1.4.0](http://github.com/mikemitterer/dart-changelog/compare/v1.3.6...v1.4.0) - 2015-12-08
 
 ### Docs
