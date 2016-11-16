@@ -1,6 +1,11 @@
 # Change Log for changelog
 Helps to write your CHANGELOG.md
 
+## [v1.4.2](http://github.com/mikemitterer/dart-changelog/compare/v1.4.1...v1.4.2) - 2016-11-16
+
+### Docs
+* Strong-Mode support [50171b8](https://github.com/mikemitterer/dart-changelog/commit/50171b8b7c4eae97887f0590dfd762656bed2efc)
+
 ## [v1.4.1](http://github.com/mikemitterer/dart-changelog/compare/v1.4.0...v1.4.1) - 2016-10-24
 
 ### Docs
