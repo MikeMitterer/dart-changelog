@@ -106,6 +106,9 @@ Sample:
     Simulate BitBucket init:    'changelog -d -r bibucket.org -a YourName -i yourrepo.git'
 ``` 
 
+## Links
+   - [Closing an issue in the same repository](https://help.github.com/articles/closing-issues-via-commit-messages/)
+   
 ### License
 
     Copyright 2015 Michael Mitterer (office@mikemitterer.at),
