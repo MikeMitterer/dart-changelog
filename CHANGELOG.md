@@ -1,6 +1,14 @@
 # Change Log for changelog
 Helps to write your CHANGELOG.md
 
+## [v1.5](http://github.com/mikemitterer/dart-changelog/compare/v1.4.2...v1.5) - 2017-09-11
+
+### Fixes
+* Two-Digits version not allowed in pubspec.yaml [4be5aaf](https://github.com/mikemitterer/dart-changelog/commit/4be5aaf4613906f0f3d62ca265d6d6a600997ab0)
+
+### Docs
+* Link in README [435be7e](https://github.com/mikemitterer/dart-changelog/commit/435be7e6f5107ac82c374d9fc95ac776a9c064fa)
+
 ## [v1.4.2](http://github.com/mikemitterer/dart-changelog/compare/v1.4.1...v1.4.2) - 2016-11-16
 
 ### Docs
