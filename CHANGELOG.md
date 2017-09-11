@@ -1,6 +1,11 @@
 # Change Log for changelog
 Helps to write your CHANGELOG.md
 
+## [Unreleased](http://github.com/mikemitterer/dart-changelog/compare/v1.5...HEAD)
+
+### Fixes
+* Author had no email [5d01089](https://github.com/mikemitterer/dart-changelog/commit/5d010897981461c459772a03e3489472eba62a61)
+
 ## [v1.5](http://github.com/mikemitterer/dart-changelog/compare/v1.4.2...v1.5) - 2017-09-11
 
 ### Fixes
