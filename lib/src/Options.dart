@@ -1,4 +1,4 @@
-part of githelp;
+part of changelog;
 
 class Options {
     static const APPNAME                = 'changelog';

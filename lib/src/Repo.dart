@@ -1,4 +1,4 @@
-part of githelp;
+part of changelog;
 
 /// Repo baut schlussendlich immer etwas
 /// in dieser Art zusammen:

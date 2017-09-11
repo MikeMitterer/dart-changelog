@@ -19,7 +19,7 @@ executables:
 dependencies:
   logging: ^0.11.0
   logging_handlers: ^0.8.0
-  console_log_handler: ^0.1.0
+  console_log_handler: ^0.2.0
     # path: /Volumes/Daten/DevLocal/DevDart/ConsoleLogHandler
 
   intl: ^0.12.0
@@ -27,6 +27,10 @@ dependencies:
   validate: ^1.0.0
   browser_detect: ^1.0.0
 
+  git_version:
+    #^0.1.0
+    path: /Volumes/Daten/DevLocal/DevDart/GitVersion
+  
 dev_dependencies:
   test: any
   grinder: any

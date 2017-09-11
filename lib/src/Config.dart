@@ -1,4 +1,4 @@
-part of githelp;
+part of changelog;
 
 /**
  * Defines default-configurations.

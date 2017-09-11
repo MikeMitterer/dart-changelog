@@ -1,4 +1,4 @@
-part of githelp;
+part of changelog;
 
 class Application {
     final Logger _logger = new Logger("githelp.Application");
@@ -7,7 +7,7 @@ class Application {
 
     Application() : options = new Options();
 
-    void run(final List<String> args) {
+    Future run(final List<String> args) async {
 
         try {
             final ArgResults argResults = options.parse(args);
@@ -38,11 +38,11 @@ class Application {
             }
             if (argResults.wasParsed(Options._ARG_CHANGELOG)) {
                 foundOptionToWorkWith = true;
-                writeChangeLog(config.simulation);
+                await writeChangeLog(config.simulation);
             }
             if (argResults.wasParsed(Options._ARG_SET_VERSION_IN_YAML)) {
                 foundOptionToWorkWith = true;
-                setVersionInYaml(config.simulation);
+                await setVersionInYaml(config.simulation);
             }
             if (argResults.wasParsed(Options._ARG_PUSH_TAGS)) {
                 foundOptionToWorkWith = true;
@@ -51,8 +51,8 @@ class Application {
 
             if (argResults.wasParsed(Options._ARG_RELEASE)) {
                 foundOptionToWorkWith = true;
-                writeChangeLog(config.simulation);
-                setVersionInYaml(config.simulation);
+                await writeChangeLog(config.simulation);
+                await setVersionInYaml(config.simulation);
                 pushTagsToOrigin();
             }
 
@@ -123,7 +123,7 @@ class Application {
         _logger.info("    and 'git push -u origin --tags'");
     }
 
-    void writeChangeLog(final bool isSimulation) {
+    Future writeChangeLog(final bool isSimulation) async {
 
         final File file = new File("CHANGELOG.md");
         if(!isSimulation) {
@@ -170,7 +170,7 @@ class Application {
         }
 
 
-        final List<String> tags = _getTags();
+        final List<String> tags = await _getVersionTags();
 
         String tagRange = "${tags.first}...HEAD";
         final _LogSections sectionsUnreleased = _getLogSections(tagRange);
@@ -200,15 +200,24 @@ class Application {
         _logger.info("${file.path} created...");
     }
 
-    void setVersionInYaml(final bool isSimulation) {
-        final List<String> tags = _getTags();
+    /// Sets the version in pubspec.yaml
+    ///
+    /// If the version has only two digits it adds an additional .0 to the
+    /// version. E.G. v0.1 becomes 0.1.0
+    Future setVersionInYaml(final bool isSimulation) async {
+        final List<String> tags = await _getVersionTags();
         if(tags.isEmpty) {
             _logger.warning("No tags available. Add one with 'git tag -am 0.0.1'");
             return;
         }
 
-        final String tag = tags.first.replaceAll(new RegExp(r"[a-zA-Z]"),"");
+        final String extendedTag = await describeTag(tags.first);
+        String version = extendedFormatToVersion(extendedTag,removeDash: true);
 
+        if(version.contains(new RegExp(r"^[0-9]+\.[0-9]+$"))) {
+            version = "${version}.0";
+        }
+            
         if(!isSimulation) {
             final File file = new File("pubspec.yaml");
             if(!file.existsSync()) {
@@ -216,11 +225,11 @@ class Application {
                 return;
             }
             String content = file.readAsStringSync();
-            content = content.replaceFirst(new RegExp(r"version: .*"),"version: $tag");
+            content = content.replaceFirst(new RegExp(r"version: .*"),"version: $version");
 
             file.writeAsStringSync(content);
         }
-        _logger.info("Version is set to: $tag");
+        _logger.info("Version in pubspec.yaml is set to: $version");
     }
 
     void pushTagsToOrigin() {
@@ -332,19 +341,8 @@ class Application {
     }
 
     /// Gibt alle Tags zurück den aktuellsten zuerst
-    List<String> _getTags() {
-        // git tag --sort version:refname
-        final ProcessResult resultGetTags = Process.runSync('git', ["tag", "--sort", "version:refname" ]);
-        if(resultGetTags.exitCode != 0) {
-            _logger.severe("'Tag-Request failed with error ${resultGetTags.stderr}!");
-        }
-        final List<String> tags = new List<String>();
-        resultGetTags.stdout.split(new RegExp(r"\s+")).reversed.forEach((final String tag) {
-            if(tag.isNotEmpty) {
-                tags.add(tag);
-            }
-        });
-
+    Future<List<String>> _getVersionTags() async {
+        final List<String> tags = getVersionTags(await getSortedGitTags()).reversed.toList();
         _logger.fine("Tags with annotation (git tag -am v1.1): $tags");
 
         return tags;

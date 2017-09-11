@@ -1,4 +1,4 @@
-part of githelp;
+part of changelog;
 
 /// Stores all the available sections.
 class _LogSections {
