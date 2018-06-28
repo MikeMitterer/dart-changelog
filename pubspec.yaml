@@ -26,13 +26,12 @@ dependencies:
   validate: ^1.0.0
   browser_detect: ^1.0.0
 
+  git_version: ^0.2.0
+  # path: /Volumes/Daten/DevLocal/DevDart/GitVersion
 
 dev_dependencies:
   test: any
   grinder: any
-
-  git_version: ^0.2.0
-    # path: /Volumes/Daten/DevLocal/DevDart/GitVersion
 
   build_runner: any
   build_test: any
