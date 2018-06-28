@@ -351,25 +351,23 @@ class Application {
     void _configLogging(final String loglevel) {
         Validate.notBlank(loglevel);
 
-        hierarchicalLoggingEnabled = false; // set this to true - its part of Logging SDK
+        var level = Level.INFO;
 
-        // now control the logging.
-        // Turn off all logging first
         switch(loglevel) {
             case "fine":
             case "debug":
-                Logger.root.level = Level.FINE;
+                level = Level.FINE;
                 break;
 
             case "warning":
-                Logger.root.level = Level.SEVERE;
+                level = Level.SEVERE;
                 break;
 
             default:
-                Logger.root.level = Level.INFO;
+                level = Level.INFO;
         }
 
-        Logger.root.onRecord.listen(new LogPrintHandler(messageFormat: "%m"));
+        configLogging(show: level);
     }
 }
 

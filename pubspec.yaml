@@ -26,8 +26,8 @@ dependencies:
   validate: ^1.0.0
   browser_detect: ^1.0.0
 
-  git_version: #^0.1.0
-     path: /Volumes/Daten/DevLocal/DevDart/GitVersion
+  git_version: ^0.2.0
+     # path: /Volumes/Daten/DevLocal/DevDart/GitVersion
   
 dev_dependencies:
   test: any
