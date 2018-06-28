@@ -6,6 +6,9 @@ Helps to write your CHANGELOG.md
 ### Fixes
 * Author had no email [5d01089](https://github.com/mikemitterer/dart-changelog/commit/5d010897981461c459772a03e3489472eba62a61)
 
+### Bugs
+* Wrong param in Application.dart crashed the app [8a27354](https://github.com/mikemitterer/dart-changelog/commit/8a27354213d5cd405987529f3a16ea899c8a6f45)
+
 ## [v1.5](http://github.com/mikemitterer/dart-changelog/compare/v1.4.2...v1.5) - 2017-09-11
 
 ### Fixes
