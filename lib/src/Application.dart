@@ -367,7 +367,7 @@ class Application {
                 level = Level.INFO;
         }
 
-        configLogging(show: level);
+        configLogging(show: level,transformer: transformerMessageOnly);
     }
 }
 

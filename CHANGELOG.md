@@ -3,6 +3,9 @@ Helps to write your CHANGELOG.md
 
 ## [Unreleased](http://github.com/mikemitterer/dart-changelog/compare/v1.5...HEAD)
 
+### Feature
+* Console-output comes without date + Logger-name [9f77003](https://github.com/mikemitterer/dart-changelog/commit/9f77003f1b764d45262d7ce03373e657fbd0b4ad)
+
 ### Fixes
 * Author had no email [5d01089](https://github.com/mikemitterer/dart-changelog/commit/5d010897981461c459772a03e3489472eba62a61)
 
