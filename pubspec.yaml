@@ -1,6 +1,6 @@
 name: changelog
 changelogname: changelog
-version: 1.5.2
+version: 1.5.3
 description: Helps to write your CHANGELOG.md
 author: Mike Mitterer <office@mikemitterer.at>
 homepage: https://github.com/MikeMitterer/dart-git-help
@@ -18,18 +18,21 @@ executables:
 
 dependencies:
   logging: ^0.11.0
-  logging_handlers: ^0.8.0
-  console_log_handler: ^0.2.0
+  console_log_handler: ^1.0.0
     # path: /Volumes/Daten/DevLocal/DevDart/ConsoleLogHandler
 
-  intl: ^0.12.0
-  args: ^0.13.0
+  intl: '>=0.15.2 <1.0.0'
+  args: ^1.4.0
   validate: ^1.0.0
   browser_detect: ^1.0.0
 
-  git_version: ^0.1.0
-    # path: /Volumes/Daten/DevLocal/DevDart/GitVersion
+  git_version: #^0.1.0
+     path: /Volumes/Daten/DevLocal/DevDart/GitVersion
   
 dev_dependencies:
   test: any
   grinder: any
+
+  build_runner: any
+  build_test: any
+  build_web_compilers: any

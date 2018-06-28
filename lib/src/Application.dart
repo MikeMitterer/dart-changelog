@@ -212,7 +212,7 @@ class Application {
         }
 
         final String extendedTag = await describeTag(tags.first);
-        String version = extendedFormatToVersion(extendedTag,removeDash: true);
+        String version = extendedFormatToVersion(extendedTag);
 
         if(version.contains(new RegExp(r"^[0-9]+\.[0-9]+$"))) {
             version = "${version}.0";
