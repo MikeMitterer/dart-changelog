@@ -6,7 +6,7 @@ author: Mike Mitterer <office@mikemitterer.at>
 homepage: https://github.com/MikeMitterer/dart-git-help
 
 environment:
-    sdk: ">=1.8.0 <2.0.0"
+  sdk: ">=2.0.0 <3.0.0"
 
 # Add the bin/git-init.dart script to the scripts pub installs.
 # Activate local repo:
@@ -17,17 +17,16 @@ executables:
   cl: changelog
 
 dependencies:
-  logging: ^0.11.0
   console_log_handler: ^1.0.0
     # path: /Volumes/Daten/DevLocal/DevDart/ConsoleLogHandler
+
 
   intl: '>=0.15.2 <1.0.0'
   args: ^1.4.0
   validate: ^1.0.0
-  browser_detect: ^1.0.0
 
-  git_version: ^0.2.0
-  # path: /Volumes/Daten/DevLocal/DevDart/GitVersion
+  git_version: ^0.3.0
+   # path: /Volumes/Daten/DevLocal/DevDart/GitVersion
 
 dev_dependencies:
   test: any
