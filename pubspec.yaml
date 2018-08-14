@@ -1,6 +1,6 @@
 name: changelog
 changelogname: changelog
-version: 1.5.9
+version: 1.6.0
 description: Helps to write your CHANGELOG.md
 author: Mike Mitterer <office@mikemitterer.at>
 homepage: https://github.com/MikeMitterer/dart-git-help

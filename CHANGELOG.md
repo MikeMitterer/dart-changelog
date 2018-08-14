@@ -1,7 +1,7 @@
 # Change Log for changelog
 Helps to write your CHANGELOG.md
 
-## [Unreleased](http://github.com/mikemitterer/dart-changelog/compare/v1.5...HEAD)
+## [v1.6](http://github.com/mikemitterer/dart-changelog/compare/v1.5...v1.6) - 2018-08-14
 
 ### Feature
 * Console-output comes without date + Logger-name [9f77003](https://github.com/mikemitterer/dart-changelog/commit/9f77003f1b764d45262d7ce03373e657fbd0b4ad)
@@ -11,6 +11,9 @@ Helps to write your CHANGELOG.md
 
 ### Bugs
 * Wrong param in Application.dart crashed the app [8a27354](https://github.com/mikemitterer/dart-changelog/commit/8a27354213d5cd405987529f3a16ea899c8a6f45)
+
+### Refactor
+* Package is now Dart 2 only [8b70d20](https://github.com/mikemitterer/dart-changelog/commit/8b70d205cbd0008a6897ecd29e4de867268a4809)
 
 ## [v1.5](http://github.com/mikemitterer/dart-changelog/compare/v1.4.2...v1.5) - 2017-09-11
 
